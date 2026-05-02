@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghisi · Elias — Family Tree</title>
+<script src="family_data.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cinzel:wght@400;500&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #f5f0e8; --ink: #1a1410; --ink-light: #3d3028; --ink-faint: #6b5d50;
+    --gold: #9a7c3f; --gold-pale: #e8d9b0;
+    --it: #3c2e6e; --it-bg: #eeedfe; --it-border: #afa9ec;
+    --es: #712b13; --es-bg: #faece7; --es-border: #f0997b;
+    --es2-bg: #f5c4b3; --es2-border: #d85a30;
+    --fr: #085041; --fr-bg: #e1f5ee; --fr-border: #5dcaa5;
+    --oc: #633806; --oc-bg: #faeeda; --oc-border: #ef9f27;
+    --oc2-bg: #f5e0b0; --oc2-border: #d4880f;
+    --oc3-bg: #edd48a; --oc3-border: #b87a08;
+    --lb: #72243e; --lb-bg: #fbeaf0; --lb-border: #ed93b1;
+    --lb2-bg: #f4c0d1; --lb2-border: #d4537e;
+    --lb3-bg: #e8b4c8; --lb3-border: #b8426a;
+    --lb4-bg: #dda0b8; --lb4-border: #a03060;
+    --you-bg: #e6f1fb; --you-border: #85b7eb;
+    --sp-bg: #eaf3de; --sp-border: #97c459;
+    --ca-bg: #d4edbe; --ca-border: #5a9a20;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--parchment); background-image: radial-gradient(ellipse at 20% 20%, rgba(154,124,63,0.06) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(154,124,63,0.05) 0%, transparent 60%); color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif; min-height: 100vh; padding: 0 0 3rem; }
+
+  /* Language Toggle */
+  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 200; display: flex; background: var(--parchment); border: 1px solid var(--gold-pale); border-radius: 20px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .lang-btn { padding: 4px 12px; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--ink-faint); background: transparent; border: none; cursor: pointer; transition: all 0.2s; }
+  .lang-btn.active { background: var(--gold); color: #fff; }
+
+  /* Header */
+  .header { text-align: center; padding: 2.5rem 1rem 1.5rem; border-bottom: 1px solid var(--gold-pale); }
+  .header-ornament { font-size: 1.1rem; color: var(--gold); letter-spacing: 0.8em; text-indent: 0.8em; margin-bottom: 0.4rem; opacity: 0.7; }
+  .header h1 { font-family: 'Cinzel', serif; font-size: clamp(1.6rem, 5vw, 2.8rem); font-weight: 500; color: var(--ink); letter-spacing: 0.06em; }
+  .header h1 span { color: var(--gold); }
+  .header-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1rem; color: var(--ink-faint); margin-top: 0.5rem; }
+  .flags { font-size: 1.5rem; margin-top: 0.8rem; letter-spacing: 0.3em; }
+
+  /* Layout */
+  .tree-container { max-width: 900px; margin: 0 auto; padding: 0 0.75rem; }
+  .section-div { display: flex; align-items: center; gap: 0.75rem; margin: 1.6rem 0 0.6rem; }
+  .section-line { flex: 1; height: 0.5px; background: var(--gold-pale); }
+  .section-label { font-family: 'Cinzel', serif; font-size: 0.62rem; color: var(--gold); letter-spacing: 0.12em; white-space: nowrap; }
+  .gen-label { text-align: center; font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.72rem; color: var(--ink-faint); margin: 0.5rem 0 0.3rem; }
+  .row { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-bottom: 2px; }
+  .couple { display: flex; align-items: flex-start; }
+  .plus { font-size: 0.65rem; color: var(--ink-faint); padding: 0 3px; margin-top: 12px; }
+  .heart { font-size: 0.9rem; padding: 0 6px; margin-top: 10px; color: #d4537e; }
+  .vl { height: 14px; display: flex; justify-content: center; }
+  .vl div { width: 0.5px; background: var(--gold-pale); }
+
+  /* Cards */
+  .card { border-radius: 6px; padding: 5px 9px 6px; border: 0.5px solid transparent; text-align: center; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; flex-shrink: 0; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); z-index: 2; }
+  .card.active { box-shadow: 0 0 0 2px var(--gold), 0 4px 18px rgba(154,124,63,0.25); z-index: 3; }
+  .card-name { font-size: 0.72rem; font-weight: 600; line-height: 1.3; white-space: nowrap; }
+  .card-meta { font-size: 0.62rem; margin-top: 1px; line-height: 1.45; white-space: nowrap; font-style: italic; }
+
+  /* Color themes */
+  .it  { background:var(--it-bg);  border-color:var(--it-border);  } .it  .card-name{color:var(--it);}  .it  .card-meta{color:#534ab7;}
+  .es  { background:var(--es-bg);  border-color:var(--es-border);  } .es  .card-name{color:var(--es);}  .es  .card-meta{color:#993c1d;}
+  .es2 { background:var(--es2-bg); border-color:var(--es2-border); } .es2 .card-name{color:#4a1b0c;} .es2 .card-meta{color:#712b13;}
+  .fr  { background:var(--fr-bg);  border-color:var(--fr-border);  } .fr  .card-name{color:var(--fr);}  .fr  .card-meta{color:#0f6e56;}
+  .oc  { background:var(--oc-bg);  border-color:var(--oc-border);  } .oc  .card-name{color:var(--oc);}  .oc  .card-meta{color:#854f0b;}
+  .oc2 { background:var(--oc2-bg); border-color:var(--oc2-border); } .oc2 .card-name{color:#412200;} .oc2 .card-meta{color:#633806;}
+  .oc3 { background:var(--oc3-bg); border-color:var(--oc3-border); } .oc3 .card-name{color:#2a1500;} .oc3 .card-meta{color:#412200;}
+  .lb  { background:var(--lb-bg);  border-color:var(--lb-border);  } .lb  .card-name{color:var(--lb);}  .lb  .card-meta{color:#993556;}
+  .lb2 { background:var(--lb2-bg); border-color:var(--lb2-border); } .lb2 .card-name{color:#4b1528;} .lb2 .card-meta{color:#72243e;}
+  .lb3 { background:var(--lb3-bg); border-color:var(--lb3-border); } .lb3 .card-name{color:#3a0e1e;} .lb3 .card-meta{color:#72243e;}
+  .lb4 { background:var(--lb4-bg); border-color:var(--lb4-border); } .lb4 .card-name{color:#2a0818;} .lb4 .card-meta{color:#5a1535;}
+  .unk { background:#f0ece6; border-color:#d4c8b8; } .unk .card-name{color:#5a4e42;} .unk .card-meta{color:#8a7a6e;}
+  .you { background:var(--you-bg); border-color:var(--you-border); border-width:1.5px; } .you .card-name{color:#0c447c;font-weight:700;} .you .card-meta{color:#185fa5;}
+  .sp  { background:var(--sp-bg);  border-color:var(--sp-border);  border-width:1.5px; } .sp  .card-name{color:#27500a;font-weight:700;} .sp  .card-meta{color:#3b6d11;}
+  .ca  { background:var(--ca-bg);  border-color:var(--ca-border);  border-width:2px;   } .ca  .card-name{color:#173404;font-weight:700;} .ca  .card-meta{color:#3b6d11;}
+
+  /* Info Panel */
+  #info-panel { position:fixed; top:0; right:0; width:320px; height:100vh; background:#faf6ef; border-left:1px solid var(--gold-pale); box-shadow:-4px 0 24px rgba(0,0,0,0.08); transform:translateX(100%); transition:transform 0.32s cubic-bezier(0.4,0,0.2,1); z-index:100; overflow-y:auto; display:flex; flex-direction:column; }
+  #info-panel.open { transform:translateX(0); }
+  #info-panel-header { padding:1.2rem 1.2rem 0.8rem; border-bottom:1px solid var(--gold-pale); flex-shrink:0; }
+  #info-panel-header h2 { font-family:'Cinzel',serif; font-size:1.05rem; font-weight:500; color:var(--ink); line-height:1.3; }
+  .panel-dates { font-family:'IM Fell English',serif; font-style:italic; font-size:0.82rem; color:var(--gold); margin-top:0.25rem; }
+  #info-panel-close { position:absolute; top:1rem; left:-2.4rem; width:2rem; height:2rem; background:#faf6ef; border:1px solid var(--gold-pale); border-right:none; border-radius:4px 0 0 4px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:0.9rem; color:var(--ink-faint); }
+  #info-panel-body { padding:1rem 1.2rem; flex:1; font-size:0.82rem; line-height:1.65; color:var(--ink-light); }
+  #info-panel-body h3 { font-family:'Cinzel',serif; font-size:0.68rem; font-weight:500; letter-spacing:0.1em; color:var(--gold); text-transform:uppercase; margin:1rem 0 0.35rem; }
+  #info-panel-body h3:first-child { margin-top:0; }
+  #info-panel-body p { margin-bottom:0.5rem; }
+  .tag { display:inline-block; background:var(--gold-pale); color:var(--gold); font-size:0.65rem; padding:1px 7px; border-radius:3px; font-family:'Cinzel',serif; letter-spacing:0.07em; margin-right:4px; margin-bottom:4px; }
+
+  /* Nayla Box */
+  .nayla-box { max-width:580px; margin:1rem auto 0; background:linear-gradient(135deg,#faf7f0,#f0f7e8); border:1px solid var(--gold-pale); border-radius:10px; padding:1rem 1.25rem; text-align:center; }
+  .nayla-flags { font-size:1.4rem; letter-spacing:0.3em; margin-bottom:0.4rem; }
+  .nayla-title { font-family:'Cinzel',serif; font-size:0.8rem; font-weight:500; color:var(--ink); }
+  .nayla-sub { font-family:'IM Fell English',serif; font-style:italic; font-size:0.78rem; color:var(--ink-faint); margin-top:0.25rem; line-height:1.6; }
+
+  /* Legend */
+  .legend-wrap { max-width:680px; margin:1.5rem auto 0; padding:0 0.75rem; }
+  .legend { display:flex; flex-wrap:wrap; gap:8px 14px; justify-content:center; }
+  .leg { display:flex; align-items:center; gap:5px; font-size:0.68rem; color:var(--ink-faint); }
+  .ld { width:10px; height:10px; border-radius:2px; flex-shrink:0; border:0.5px solid transparent; }
+
+  /* Overlay */
+  #overlay { position:fixed; inset:0; background:rgba(26,20,16,0.25); opacity:0; pointer-events:none; transition:opacity 0.32s; z-index:99; }
+  #overlay.show { opacity:1; pointer-events:all; }
+
+  @media (max-width:600px) { #info-panel{width:100vw;} .card-name{font-size:0.68rem;} .card-meta{font-size:0.58rem;} }
+</style>
+</head>
+<body>
+
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" id="btn-fr" onclick="setLang('fr')">FR</button>
+</div>
+
+<div id="info-panel">
+  <button id="info-panel-close" onclick="closePanel()">✕</button>
+  <div id="info-panel-header">
+    <h2 id="panel-name">—</h2>
+    <div class="panel-dates" id="panel-dates"></div>
+  </div>
+  <div id="info-panel-body"></div>
+</div>
+<div id="overlay" onclick="closePanel()"></div>
+
+<div class="header">
+  <div class="header-ornament">✦ ✦ ✦</div>
+  <h1>Ghisi <span>·</span> Elias</h1>
+  <div class="header-sub" id="header-sub">A family across five nations · ten generations</div>
+  <div class="flags">🇮🇹 🇪🇸 🇫🇷 🇱🇧 🇨🇦</div>
+</div>
+
+<div class="tree-container">
+
+<!-- ITALIAN LINE -->
+<div class="section-div"><div class="section-line"></div><div class="section-label" id="lbl-italian-line">Ghisi / Marconi — Veneto, Italy · paternal line</div><div class="section-line"></div></div>
+
+<div class="gen-label" id="gen-it-6">Gen 6 — to research · Padova / Verona, ~1820s</div>
+<div class="row">
+  <div class="couple">
+    <div class="card unk" onclick="openPanel('unk-ghisi')"><div class="card-name">? Ghisi</div><div class="card-meta">San Martino · ~1820s</div></div>
+    <div class="plus">+</div>
+    <div class="card unk"><div class="card-name">? unknown</div><div class="card-meta">—</div></div>
+  </div>
+  <div style="width:12px"></div>
+  <div class="couple">
+    <div class="card unk" onclick="openPanel('unk-marconi')"><div class="card-name">? Marconi</div><div class="card-meta">Mizzole · ~1800s</div></div>
+    <div class="plus">+</div>
+    <div class="card unk"><div class="card-name">? unknown</div><div class="card-meta">—</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-it-5">Gen 5 — San Martino di Lupari · Mizzole, Verona</div>
+<div class="row">
+  <div class="couple">
+    <div class="card it" onclick="openPanel('baptiste-ghisi')"><div class="card-name">Giovanni Battista Ghisi</div><div class="card-meta" id="cm-baptiste">resident Soave · father of Silvio & Carlo</div></div>
+    <div class="plus">+</div>
+    <div class="card it"><div class="card-name">Luigina Gendroni</div><div class="card-meta" id="cm-luigina">resident Soave · origin → S. Verona plain</div></div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="couple">
+    <div class="card it" onclick="openPanel('edigio-marconi')"><div class="card-name">Edigio Marconi</div><div class="card-meta">b. ~1835 · Mizzole, Verona</div></div>
+    <div class="plus">+</div>
+    <div class="card it"><div class="card-name">Savinia Rossa</div><div class="card-meta">b. ~1838 · Verona area</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-it-4">Gen 4 — Italy → Aude, France (~1900)</div>
+<div class="row">
+  <div class="couple">
+    <div class="card it" onclick="openPanel('giuseppe-ghisi')"><div class="card-name">Giuseppe Ghisi</div><div class="card-meta">b. 1868 · San Martino · villico<br>Via Campagnola 14, Soave · d. 1936</div></div>
+    <div class="plus">+</div>
+    <div class="card it" onclick="openPanel('dosolina')"><div class="card-name">Dosolina Molinaroli</div><div class="card-meta">b. 1873 · Soave<br>d. 1929 · Laure</div></div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="couple">
+    <div class="card it" onclick="openPanel('gaetano-marconi')"><div class="card-name">Gaetano Marconi</div><div class="card-meta">b. 22 May 1867 · Mizzole<br>d. 1933 · Villesèquelande</div></div>
+    <div class="plus">+</div>
+    <div class="card it"><div class="card-name">Almerina Comparotto</div><div class="card-meta">b. ~1875 · Veneto · d. 1938</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<!-- SPANISH LINE -->
+<div class="section-div"><div class="section-line"></div><div class="section-label" id="lbl-spanish-line">Caballero / Dominguez — Zalamea la Real, Andalusia</div><div class="section-line"></div></div>
+
+<div class="gen-label" id="gen-es-5">Gen 5 — Zalamea la Real, Huelva</div>
+<div class="row">
+  <div class="couple">
+    <div class="card es2" onclick="openPanel('justo-caballero')"><div class="card-name">Justo Caballero</div><div class="card-meta">Zalamea la Real</div></div>
+    <div class="plus">+</div>
+    <div class="card es2"><div class="card-name">Antoinette Pichardo</div><div class="card-meta">Zalamea la Real</div></div>
+  </div>
+  <div style="width:10px"></div>
+  <div class="couple">
+    <div class="card es2" onclick="openPanel('joseph-dominguez')"><div class="card-name">Joseph Dominguez</div><div class="card-meta">Zalamea la Real</div></div>
+    <div class="plus">+</div>
+    <div class="card es2" onclick="openPanel('fernande-barada')"><div class="card-name">Fernande Barada</div><div class="card-meta" id="cm-barada">Zalamea · Moorish roots</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-es-4">Gen 4 — Zalamea → Caunes-Minervois (~1913)</div>
+<div class="row">
+  <div class="couple">
+    <div class="card es" onclick="openPanel('emilio-caballero')"><div class="card-name">Emilio Caballero</div><div class="card-meta" id="cm-emilio">b. 20 Apr 1893 · Zalamea<br>→ Caunes ~1913</div></div>
+    <div class="plus">+</div>
+    <div class="card es" onclick="openPanel('emilia-dominguez')"><div class="card-name">Emilia Dominguez</div><div class="card-meta" id="cm-emilia">b. 2 Mar 1893 · Zalamea<br>→ Caunes ~1913</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-it-3">Gen 3 — Soave · Marcellise → Aude · paternal grandparents of Christophe</div>
+<div class="row">
+  <div class="couple">
+    <div class="card it" onclick="openPanel('silvio-ghisi')"><div class="card-name">Silvio Mario Ghisi</div><div class="card-meta">b. 1 May 1895 · Soave ✓<br>Via Campagnola 14 · d. 1934</div></div>
+    <div class="plus">+</div>
+    <div class="card it"><div class="card-name">Carillia Marconi</div><div class="card-meta">b. 1896 · Marcellise</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-it-2">Gen 2 — paternal grandparents</div>
+<div class="row">
+  <div class="couple">
+    <div class="card it" onclick="openPanel('lino-ghisi')"><div class="card-name">Lino Guido Ghisi</div><div class="card-meta" id="cm-lino">b. 17 Jan 1919 · Montorio<br>d. Caunes-Minervois</div></div>
+    <div class="plus">+</div>
+    <div class="card es" onclick="openPanel('fernande-caballero')"><div class="card-name">Fernande Caballero</div><div class="card-meta" id="cm-fernande">b. 29 Dec 1920 · Caunes<br>m. 14 Oct 1940 · Laure</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<!-- OCCITAN LINE -->
+<div class="section-div"><div class="section-line"></div><div class="section-label" id="lbl-occitan-line">Lafourcade / Massip / Bordes / Respaud — Thil · Maurens · Ariège · Toulouse</div><div class="section-line"></div></div>
+
+<div class="gen-label" id="gen-oc-7">Gen 7 — Thil, Haute-Garonne</div>
+<div class="row">
+  <div class="couple">
+    <div class="card oc3" onclick="openPanel('jean-lafourcade')"><div class="card-name">Jean Lafourcade</div><div class="card-meta" id="cm-jean">b. ~1838 · Thil · cultivateur</div></div>
+    <div class="plus">+</div>
+    <div class="card oc3"><div class="card-name">Marie Massip</div><div class="card-meta" id="cm-marie-massip">b. ~1841 · Thil · ménagère</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-oc-6">Gen 6 — Thil → married Grenade</div>
+<div class="row">
+  <div class="couple">
+    <div class="card oc2" onclick="openPanel('michel-lafourcade')"><div class="card-name">Michel Félix Lafourcade</div><div class="card-meta">b. 15 Sep 1876 · Thil<br>m. 10 Feb 1904 · Grenade</div></div>
+    <div class="plus">+</div>
+    <div class="card oc2" onclick="openPanel('catherine-delmas')"><div class="card-name">Catherine Delmas</div><div class="card-meta" id="cm-catherine">b. ~1883 · Maurens</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-oc-5">Gen 5 — Ariège · Maurens</div>
+<div class="row">
+  <div class="couple">
+    <div class="card oc" onclick="openPanel('joseph-respaud')"><div class="card-name">Joseph Respaud</div><div class="card-meta">b. 19 Jun 1902 · Lorp-Sentaraille<br>d. 30 Dec 1979 · Prat-Bonrepaux</div></div>
+    <div class="plus">+</div>
+    <div class="card oc2" onclick="openPanel('mt-lafourcade')"><div class="card-name">Marie-Thérèse Lafourcade</div><div class="card-meta">b. 17 Mar 1904 · Maurens ✓<br>d. 2 May 1979 · Thil ✓</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-oc-4">Gen 4 — maternal grandparents · Thil → Toulouse</div>
+<div class="row">
+  <div class="couple">
+    <div class="card oc2" onclick="openPanel('guillaume-bordes')"><div class="card-name">Guillaume André Yvan Bordes</div><div class="card-meta">b. 15 Mar 1938 · Thil (31)</div></div>
+    <div class="plus">+</div>
+    <div class="card oc" onclick="openPanel('eliane-respaud')"><div class="card-name">Éliane Noëlle Respaud</div><div class="card-meta">b. 25 Dec 1943 · Toulouse ✓</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<!-- GEN 3 PARENTS -->
+<div class="gen-label" id="gen-3">Gen 3 — parents of Christophe</div>
+<div class="row">
+  <div class="couple">
+    <div class="card fr" onclick="openPanel('richard-ghisi')"><div class="card-name">Richard Ghisi</div><div class="card-meta" id="cm-richard">b. 9 May · Caunes-Minervois</div></div>
+    <div class="plus">+</div>
+    <div class="card oc" onclick="openPanel('brigitte-bordes')"><div class="card-name">Brigitte Bordes</div><div class="card-meta">b. 29 Nov 1963 · Toulouse ✓</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<!-- GEN 0 -->
+<div class="gen-label" id="gen-0">Gen 0 — Christophe &amp; Sahar</div>
+<div class="row">
+  <div class="couple" style="align-items:center">
+    <div class="card you" onclick="openPanel('christophe')"><div class="card-name">Christophe Elie Ghisi</div><div class="card-meta" id="cm-christophe">b. 5 Jun 1985 · Narbonne<br>met in Malaysia · Canada 2018</div></div>
+    <div class="heart">♥</div>
+    <div class="card sp" onclick="openPanel('sahar')"><div class="card-name">Sahar Ghassan Elias</div><div class="card-meta" id="cm-sahar">b. 22 Aug 1987 · Beirut<br>left Lebanon 1991 · met in Malaysia</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<!-- NEXT GEN -->
+<div class="gen-label" id="gen-next">Next generation 🌱</div>
+<div class="row">
+  <div class="card ca" onclick="openPanel('nayla')"><div class="card-name">Nayla Ghisi</div><div class="card-meta">b. 15 Jan 2022 · Toronto, Canada</div></div>
+</div>
+
+<div class="nayla-box">
+  <div class="nayla-flags">🇮🇹 🇪🇸 🇫🇷 🇱🇧 🇨🇦</div>
+  <div class="nayla-title" id="nayla-title">Nayla — 10 generations · 5 nations</div>
+  <div class="nayla-sub" id="nayla-sub">Italian Veneto · Andalusian · French Aude · Occitan (Thil · Maurens · Ariège · Toulouse)<br>Lebanese Maronite — Mayfouk (2nd Patriarchal seat) · Batroun (1st Patriarch's diocese, 685 AD)<br>Born Toronto · 15 January 2022 · 3 birth certificates confirmed ✓</div>
+</div>
+
+<!-- LEBANESE LINE — ELIAS -->
+<div class="section-div" style="margin-top:1.8rem"><div class="section-line"></div><div class="section-label" id="lbl-elias-line">Elias — Sahar's paternal line · Mayfouk, Jbeil</div><div class="section-line"></div></div>
+
+<div class="gen-label" id="gen-lb-4a">Gen 4 — Sahar's paternal grandparents · Mayfouk</div>
+<div class="row">
+  <div class="couple">
+    <div class="card lb" onclick="openPanel('nassib-elias')"><div class="card-name">Nassib Elias</div><div class="card-meta">Mayfouk, Jbeil</div></div>
+    <div class="plus">+</div>
+    <div class="card lb"><div class="card-name">Abla Francis</div><div class="card-meta">Mayfouk, Jbeil</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-lb-3">Gen 3 — Sahar's father</div>
+<div class="row">
+  <div class="card lb" onclick="openPanel('ghassan-elias')"><div class="card-name">Ghassan Elias</div><div class="card-meta" id="cm-ghassan">b. 1940 · Mayfouk, Jbeil<br>→ Canada ahead of family ~1991</div></div>
+</div>
+
+<!-- LEBANESE LINE — ROUHANA -->
+<div class="section-div" style="margin-top:1.2rem"><div class="section-line"></div><div class="section-label" id="lbl-rouhana-line">Rouhana / Tanous / Mouzaya — Sahar's maternal line · Batroun</div><div class="section-line"></div></div>
+
+<div class="gen-label" id="gen-lb-6">Gen 6 — Sahar's great-great-grandparents · Batroun</div>
+<div class="row">
+  <div class="couple">
+    <div class="card lb4" onclick="openPanel('boutros-rouhana')"><div class="card-name">Boutros Tanous Rouhana</div><div class="card-meta" id="cm-boutros">Batroun · "Peter the Wise"</div></div>
+    <div class="plus">+</div>
+    <div class="card lb4" onclick="openPanel('najibeh-akiki')"><div class="card-name">Najibeh Akiki</div><div class="card-meta" id="cm-najibeh-akiki">Batroun · "agate stone"</div></div>
+  </div>
+  <div style="width:12px"></div>
+  <div class="couple">
+    <div class="card lb4" onclick="openPanel('youssef-mouzaya')"><div class="card-name">Youssef Mouzaya</div><div class="card-meta" id="cm-youssef-m">Batroun · rare surname</div></div>
+    <div class="plus">+</div>
+    <div class="card lb4" onclick="openPanel('zahia-khoury')"><div class="card-name">Zahia Khoury</div><div class="card-meta" id="cm-zahia">Batroun · "the priest family"</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-lb-5">Gen 5 — Sahar's great-grandparents · Batroun</div>
+<div class="row">
+  <div class="couple">
+    <div class="card lb3" onclick="openPanel('youssef-boutros')"><div class="card-name">Youssef Boutros Tanous</div><div class="card-meta" id="cm-youssef-b">Batroun · son of Boutros</div></div>
+    <div class="plus">+</div>
+    <div class="card lb3" onclick="openPanel('nahia-mouzaya')"><div class="card-name">Nahia Mouzaya</div><div class="card-meta" id="cm-nahia">Batroun · daughter of Youssef + Zahia</div></div>
+  </div>
+</div>
+<div class="vl"><div></div></div>
+
+<div class="gen-label" id="gen-lb-4b">Gen 4 — Sahar's mother · Batroun</div>
+<div class="row">
+  <div class="card lb2" onclick="openPanel('najibeh-rouhana')"><div class="card-name">Najibeh Rouhana</div><div class="card-meta">b. 1948 · Batroun ✓<br>→ Damascus · Canada 1991</div></div>
+</div>
+
+<!-- Legend -->
+<div class="legend-wrap">
+  <div class="legend">
+    <div class="leg"><div class="ld" style="background:#eeedfe;border-color:#afa9ec"></div><span id="leg-it">Italian Veneto</span></div>
+    <div class="leg"><div class="ld" style="background:#f5c4b3;border-color:#d85a30"></div><span id="leg-es2">Andalusian Gen 5</span></div>
+    <div class="leg"><div class="ld" style="background:#faece7;border-color:#f0997b"></div><span id="leg-es">Spanish → France</span></div>
+    <div class="leg"><div class="ld" style="background:#e1f5ee;border-color:#5dcaa5"></div><span id="leg-fr">French Aude</span></div>
+    <div class="leg"><div class="ld" style="background:#faeeda;border-color:#ef9f27"></div><span id="leg-oc">Occitan Ariège</span></div>
+    <div class="leg"><div class="ld" style="background:#f5e0b0;border-color:#d4880f"></div><span id="leg-oc2">Occitan Thil / Toulouse</span></div>
+    <div class="leg"><div class="ld" style="background:#edd48a;border-color:#b87a08"></div><span id="leg-oc3">Occitan Gen 7</span></div>
+    <div class="leg"><div class="ld" style="background:#fbeaf0;border-color:#ed93b1"></div><span id="leg-lb">Lebanese Mayfouk</span></div>
+    <div class="leg"><div class="ld" style="background:#f4c0d1;border-color:#d4537e"></div><span id="leg-lb2">Lebanese Batroun Gen 4</span></div>
+    <div class="leg"><div class="ld" style="background:#e8b4c8;border-color:#b8426a"></div><span id="leg-lb3">Lebanese Batroun Gen 5</span></div>
+    <div class="leg"><div class="ld" style="background:#dda0b8;border-color:#a03060"></div><span id="leg-lb4">Lebanese Batroun Gen 6</span></div>
+    <div class="leg"><div class="ld" style="background:#d4edbe;border-color:#5a9a20;border-width:1.5px"></div><span id="leg-ca">Canadian</span></div>
+  </div>
+</div>
+
+</div><!-- end .tree-container -->
+
+<script>
+let currentLang = 'en';
+let currentCard = null;
+let currentPanelId = null;
+
+/* ── Translatable UI strings ── */
+const T = {
+  'header-sub':   { en: 'A family across five nations · ten generations', fr: 'Une famille à travers cinq nations · dix générations' },
+  'nayla-title':  { en: 'Nayla — 10 generations · 5 nations', fr: 'Nayla — 10 générations · 5 nations' },
+  'nayla-sub':    { en: 'Italian Veneto · Andalusian · French Aude · Occitan (Thil · Maurens · Ariège · Toulouse)<br>Lebanese Maronite — Mayfouk (2nd Patriarchal seat) · Batroun (1st Patriarch\'s diocese, 685 AD)<br>Born Toronto · 15 January 2022 · 3 birth certificates confirmed ✓', fr: 'Vénétie italienne · Andalouse · Aude française · Occitane (Thil · Maurens · Ariège · Toulouse)<br>Libanaise Maronite — Mayfouk (2e siège patriarcal) · Batroun (1er diocèse du patriarche, 685 ap. J.-C.)<br>Née à Toronto · 15 janvier 2022 · 3 actes de naissance confirmés ✓' },
+  'lbl-italian-line':  { en: 'Ghisi / Marconi — Veneto, Italy · paternal line', fr: 'Ghisi / Marconi — Vénétie, Italie · lignée paternelle' },
+  'lbl-spanish-line':  { en: 'Caballero / Dominguez — Zalamea la Real, Andalusia', fr: 'Caballero / Dominguez — Zalamea la Real, Andalousie' },
+  'lbl-occitan-line':  { en: 'Lafourcade / Massip / Bordes / Respaud — Thil · Maurens · Ariège · Toulouse', fr: 'Lafourcade / Massip / Bordes / Respaud — Thil · Maurens · Ariège · Toulouse' },
+  'lbl-elias-line':    { en: "Elias — Sahar's paternal line · Mayfouk, Jbeil", fr: 'Elias — lignée paternelle de Sahar · Mayfouk, Jbeil' },
+  'lbl-rouhana-line':  { en: "Rouhana / Tanous / Mouzaya — Sahar's maternal line · Batroun", fr: 'Rouhana / Tanous / Mouzaya — lignée maternelle de Sahar · Batroun' },
+  'gen-it-6': { en: 'Gen 6 — to research · Padova / Verona, ~1820s', fr: 'Gén. 6 — à rechercher · Padoue / Vérone, ~1820' },
+  'gen-it-5': { en: 'Gen 5 — San Martino di Lupari · Mizzole, Verona', fr: 'Gén. 5 — San Martino di Lupari · Mizzole, Vérone' },
+  'gen-it-4': { en: 'Gen 4 — Italy → Aude, France (~1900)', fr: 'Gén. 4 — Italie → Aude, France (~1900)' },
+  'gen-es-5': { en: 'Gen 5 — Zalamea la Real, Huelva', fr: 'Gén. 5 — Zalamea la Real, Huelva' },
+  'gen-es-4': { en: 'Gen 4 — Zalamea → Caunes-Minervois (~1913)', fr: 'Gén. 4 — Zalamea → Caunes-Minervois (~1913)' },
+  'gen-it-3': { en: "Gen 3 — Soave · Marcellise → Aude · paternal grandparents of Christophe", fr: 'Gén. 3 — Soave · Marcellise → Aude · grands-parents paternels de Christophe' },
+  'gen-it-2': { en: 'Gen 2 — paternal grandparents', fr: 'Gén. 2 — grands-parents paternels' },
+  'gen-oc-7': { en: 'Gen 7 — Thil, Haute-Garonne', fr: 'Gén. 7 — Thil, Haute-Garonne' },
+  'gen-oc-6': { en: 'Gen 6 — Thil → married Grenade', fr: 'Gén. 6 — Thil → mariage à Grenade' },
+  'gen-oc-5': { en: 'Gen 5 — Ariège · Maurens', fr: 'Gén. 5 — Ariège · Maurens' },
+  'gen-oc-4': { en: 'Gen 4 — maternal grandparents · Thil → Toulouse', fr: 'Gén. 4 — grands-parents maternels · Thil → Toulouse' },
+  'gen-3':    { en: 'Gen 3 — parents of Christophe', fr: 'Gén. 3 — parents de Christophe' },
+  'gen-0':    { en: 'Gen 0 — Christophe & Sahar', fr: 'Gén. 0 — Christophe & Sahar' },
+  'gen-next': { en: 'Next generation 🌱', fr: 'Prochaine génération 🌱' },
+  'gen-lb-4a':{ en: "Gen 4 — Sahar's paternal grandparents · Mayfouk", fr: 'Gén. 4 — grands-parents paternels de Sahar · Mayfouk' },
+  'gen-lb-3': { en: "Gen 3 — Sahar's father", fr: 'Gén. 3 — père de Sahar' },
+  'gen-lb-6': { en: "Gen 6 — Sahar's great-great-grandparents · Batroun", fr: 'Gén. 6 — arrière-arrière-grands-parents de Sahar · Batroun' },
+  'gen-lb-5': { en: "Gen 5 — Sahar's great-grandparents · Batroun", fr: 'Gén. 5 — arrière-grands-parents de Sahar · Batroun' },
+  'gen-lb-4b':{ en: "Gen 4 — Sahar's mother · Batroun", fr: 'Gén. 4 — mère de Sahar · Batroun' },
+  'cm-baptiste':      { en: 'resident Soave · father of Silvio & Carlo', fr: 'résident de Soave · père de Silvio et Carlo' },
+  'cm-luigina':       { en: 'resident Soave · origin → S. Verona plain', fr: 'résidente de Soave · plaine de Vérone' },
+  'cm-barada':        { en: 'Zalamea · Moorish roots', fr: 'Zalamea · racines mauresques' },
+  'cm-emilio':        { en: 'b. 20 Apr 1893 · Zalamea<br>→ Caunes ~1913', fr: 'n. 20 avr. 1893 · Zalamea<br>→ Caunes ~1913' },
+  'cm-emilia':        { en: 'b. 2 Mar 1893 · Zalamea<br>→ Caunes ~1913', fr: 'n. 2 mars 1893 · Zalamea<br>→ Caunes ~1913' },
+  'cm-lino':          { en: 'b. 17 Jan 1919 · Montorio<br>d. Caunes-Minervois', fr: 'n. 17 jan. 1919 · Montorio<br>d. Caunes-Minervois' },
+  'cm-fernande':      { en: 'b. 29 Dec 1920 · Caunes<br>m. 14 Oct 1940 · Laure', fr: 'n. 29 déc. 1920 · Caunes<br>m. 14 oct. 1940 · Laure' },
+  'cm-jean':          { en: 'b. ~1838 · Thil · cultivateur', fr: 'n. ~1838 · Thil · cultivateur' },
+  'cm-marie-massip':  { en: 'b. ~1841 · Thil · ménagère', fr: 'n. ~1841 · Thil · ménagère' },
+  'cm-catherine':     { en: 'b. ~1883 · Maurens', fr: 'n. ~1883 · Maurens' },
+  'cm-richard':       { en: 'b. 9 May · Caunes-Minervois', fr: 'n. 9 mai · Caunes-Minervois' },
+  'cm-christophe':    { en: 'b. 5 Jun 1985 · Narbonne<br>met in Malaysia · Canada 2018', fr: 'n. 5 juin 1985 · Narbonne<br>rencontré en Malaisie · Canada 2018' },
+  'cm-sahar':         { en: 'b. 22 Aug 1987 · Beirut<br>left Lebanon 1991 · met in Malaysia', fr: 'n. 22 août 1987 · Beyrouth<br>quitté le Liban 1991 · rencontré en Malaisie' },
+  'cm-ghassan':       { en: 'b. 1940 · Mayfouk, Jbeil<br>→ Canada ahead of family ~1991', fr: 'n. 1940 · Mayfouk, Jbeil<br>→ Canada avant la famille ~1991' },
+  'cm-boutros':       { en: 'Batroun · "Peter the Wise"', fr: 'Batroun · « Pierre le Sage »' },
+  'cm-najibeh-akiki': { en: 'Batroun · "agate stone"', fr: 'Batroun · « pierre d\'agate »' },
+  'cm-youssef-m':     { en: 'Batroun · rare surname', fr: 'Batroun · patronyme rare' },
+  'cm-zahia':         { en: 'Batroun · "the priest family"', fr: 'Batroun · « la famille du prêtre »' },
+  'cm-youssef-b':     { en: 'Batroun · son of Boutros', fr: 'Batroun · fils de Boutros' },
+  'cm-nahia':         { en: 'Batroun · daughter of Youssef + Zahia', fr: 'Batroun · fille de Youssef + Zahia' },
+  'leg-it':  { en: 'Italian Veneto', fr: 'Vénétie italienne' },
+  'leg-es2': { en: 'Andalusian Gen 5', fr: 'Andalou Gén. 5' },
+  'leg-es':  { en: 'Spanish → France', fr: 'Espagnol → France' },
+  'leg-fr':  { en: 'French Aude', fr: 'Aude française' },
+  'leg-oc':  { en: 'Occitan Ariège', fr: 'Occitan Ariège' },
+  'leg-oc2': { en: 'Occitan Thil / Toulouse', fr: 'Occitan Thil / Toulouse' },
+  'leg-oc3': { en: 'Occitan Gen 7', fr: 'Occitan Gén. 7' },
+  'leg-lb':  { en: 'Lebanese Mayfouk', fr: 'Libanais Mayfouk' },
+  'leg-lb2': { en: 'Lebanese Batroun Gen 4', fr: 'Libanais Batroun Gén. 4' },
+  'leg-lb3': { en: 'Lebanese Batroun Gen 5', fr: 'Libanais Batroun Gén. 5' },
+  'leg-lb4': { en: 'Lebanese Batroun Gen 6', fr: 'Libanais Batroun Gén. 6' },
+  'leg-ca':  { en: 'Canadian', fr: 'Canadien' },
+};
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+  Object.entries(T).forEach(([id, t]) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = t[lang];
+  });
+  if (currentPanelId) renderPanel(currentPanelId);
+}
+
+function openPanel(id) {
+  currentPanelId = id;
+  if (currentCard) currentCard.classList.remove('active');
+  currentCard = event.currentTarget;
+  currentCard.classList.add('active');
+  renderPanel(id);
+}
+
+function renderPanel(id) {
+  const person = FAMILY_DATA.people[id];
+  if (!person) return;
+  const d = person[currentLang] || person['en'];
+  document.getElementById('panel-name').textContent = d.name;
+  document.getElementById('panel-dates').textContent = d.dates || '';
+  let html = '';
+  if (d.tags && d.tags.length) {
+    html += '<div style="margin-bottom:0.75rem">';
+    d.tags.forEach(t => { html += `<span class="tag">${t}</span>`; });
+    html += '</div>';
+  }
+  if (d.sections) {
+    d.sections.forEach(s => { html += `<h3>${s.title}</h3><p>${s.text}</p>`; });
+  }
+  document.getElementById('info-panel-body').innerHTML = html;
+  document.getElementById('info-panel').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+}
+
+function closePanel() {
+  document.getElementById('info-panel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  if (currentCard) { currentCard.classList.remove('active'); currentCard = null; }
+  currentPanelId = null;
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+</script>
+</body>
+</html>
