@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -28,87 +29,88 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--parchment); background-image: radial-gradient(ellipse at 20% 20%, rgba(154,124,63,0.06) 0%, transparent 60%), radial-gradient(ellipse at 80% 80%, rgba(154,124,63,0.05) 0%, transparent 60%); color: var(--ink); font-family: 'Cormorant Garamond', Georgia, serif; min-height: 100vh; padding: 0 0 3rem; }
 
-  /* Language Toggle */
-  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 200; display: flex; background: var(--parchment); border: 1px solid var(--gold-pale); border-radius: 20px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-  .lang-btn { padding: 4px 12px; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--ink-faint); background: transparent; border: none; cursor: pointer; transition: all 0.2s; }
-  .lang-btn.active { background: var(--gold); color: #fff; }
+/* Language Toggle */
+.lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 200; display: flex; background: var(–parchment); border: 1px solid var(–gold-pale); border-radius: 20px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.lang-btn { padding: 4px 12px; font-family: ‘Cinzel’, serif; font-size: 0.65rem; letter-spacing: 0.1em; color: var(–ink-faint); background: transparent; border: none; cursor: pointer; transition: all 0.2s; }
+.lang-btn.active { background: var(–gold); color: #fff; }
 
-  /* Header */
-  .header { text-align: center; padding: 2.5rem 1rem 1.5rem; border-bottom: 1px solid var(--gold-pale); }
-  .header-ornament { font-size: 1.1rem; color: var(--gold); letter-spacing: 0.8em; text-indent: 0.8em; margin-bottom: 0.4rem; opacity: 0.7; }
-  .header h1 { font-family: 'Cinzel', serif; font-size: clamp(1.6rem, 5vw, 2.8rem); font-weight: 500; color: var(--ink); letter-spacing: 0.06em; }
-  .header h1 span { color: var(--gold); }
-  .header-sub { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1rem; color: var(--ink-faint); margin-top: 0.5rem; }
-  .flags { font-size: 1.5rem; margin-top: 0.8rem; letter-spacing: 0.3em; }
+/* Header */
+.header { text-align: center; padding: 2.5rem 1rem 1.5rem; border-bottom: 1px solid var(–gold-pale); }
+.header-ornament { font-size: 1.1rem; color: var(–gold); letter-spacing: 0.8em; text-indent: 0.8em; margin-bottom: 0.4rem; opacity: 0.7; }
+.header h1 { font-family: ‘Cinzel’, serif; font-size: clamp(1.6rem, 5vw, 2.8rem); font-weight: 500; color: var(–ink); letter-spacing: 0.06em; }
+.header h1 span { color: var(–gold); }
+.header-sub { font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 1rem; color: var(–ink-faint); margin-top: 0.5rem; }
+.flags { font-size: 1.5rem; margin-top: 0.8rem; letter-spacing: 0.3em; }
 
-  /* Layout */
-  .tree-container { max-width: 900px; margin: 0 auto; padding: 0 0.75rem; }
-  .section-div { display: flex; align-items: center; gap: 0.75rem; margin: 1.6rem 0 0.6rem; }
-  .section-line { flex: 1; height: 0.5px; background: var(--gold-pale); }
-  .section-label { font-family: 'Cinzel', serif; font-size: 0.62rem; color: var(--gold); letter-spacing: 0.12em; white-space: nowrap; }
-  .gen-label { text-align: center; font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.72rem; color: var(--ink-faint); margin: 0.5rem 0 0.3rem; }
-  .row { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-bottom: 2px; }
-  .couple { display: flex; align-items: flex-start; }
-  .plus { font-size: 0.65rem; color: var(--ink-faint); padding: 0 3px; margin-top: 12px; }
-  .heart { font-size: 0.9rem; padding: 0 6px; margin-top: 10px; color: #d4537e; }
-  .vl { height: 14px; display: flex; justify-content: center; }
-  .vl div { width: 0.5px; background: var(--gold-pale); }
+/* Layout */
+.tree-container { max-width: 900px; margin: 0 auto; padding: 0 0.75rem; }
+.section-div { display: flex; align-items: center; gap: 0.75rem; margin: 1.6rem 0 0.6rem; }
+.section-line { flex: 1; height: 0.5px; background: var(–gold-pale); }
+.section-label { font-family: ‘Cinzel’, serif; font-size: 0.62rem; color: var(–gold); letter-spacing: 0.12em; white-space: nowrap; }
+.gen-label { text-align: center; font-family: ‘IM Fell English’, serif; font-style: italic; font-size: 0.72rem; color: var(–ink-faint); margin: 0.5rem 0 0.3rem; }
+.row { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin-bottom: 2px; }
+.couple { display: flex; align-items: flex-start; }
+.plus { font-size: 0.65rem; color: var(–ink-faint); padding: 0 3px; margin-top: 12px; }
+.heart { font-size: 0.9rem; padding: 0 6px; margin-top: 10px; color: #d4537e; }
+.vl { height: 14px; display: flex; justify-content: center; }
+.vl div { width: 0.5px; background: var(–gold-pale); }
 
-  /* Cards */
-  .card { border-radius: 6px; padding: 5px 9px 6px; border: 0.5px solid transparent; text-align: center; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; flex-shrink: 0; }
-  .card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); z-index: 2; }
-  .card.active { box-shadow: 0 0 0 2px var(--gold), 0 4px 18px rgba(154,124,63,0.25); z-index: 3; }
-  .card-name { font-size: 0.72rem; font-weight: 600; line-height: 1.3; white-space: nowrap; }
-  .card-meta { font-size: 0.62rem; margin-top: 1px; line-height: 1.45; white-space: nowrap; font-style: italic; }
+/* Cards */
+.card { border-radius: 6px; padding: 5px 9px 6px; border: 0.5px solid transparent; text-align: center; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; flex-shrink: 0; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); z-index: 2; }
+.card.active { box-shadow: 0 0 0 2px var(–gold), 0 4px 18px rgba(154,124,63,0.25); z-index: 3; }
+.card-name { font-size: 0.72rem; font-weight: 600; line-height: 1.3; white-space: nowrap; }
+.card-meta { font-size: 0.62rem; margin-top: 1px; line-height: 1.45; white-space: nowrap; font-style: italic; }
 
-  /* Color themes */
-  .it  { background:var(--it-bg);  border-color:var(--it-border);  } .it  .card-name{color:var(--it);}  .it  .card-meta{color:#534ab7;}
-  .es  { background:var(--es-bg);  border-color:var(--es-border);  } .es  .card-name{color:var(--es);}  .es  .card-meta{color:#993c1d;}
-  .es2 { background:var(--es2-bg); border-color:var(--es2-border); } .es2 .card-name{color:#4a1b0c;} .es2 .card-meta{color:#712b13;}
-  .fr  { background:var(--fr-bg);  border-color:var(--fr-border);  } .fr  .card-name{color:var(--fr);}  .fr  .card-meta{color:#0f6e56;}
-  .oc  { background:var(--oc-bg);  border-color:var(--oc-border);  } .oc  .card-name{color:var(--oc);}  .oc  .card-meta{color:#854f0b;}
-  .oc2 { background:var(--oc2-bg); border-color:var(--oc2-border); } .oc2 .card-name{color:#412200;} .oc2 .card-meta{color:#633806;}
-  .oc3 { background:var(--oc3-bg); border-color:var(--oc3-border); } .oc3 .card-name{color:#2a1500;} .oc3 .card-meta{color:#412200;}
-  .lb  { background:var(--lb-bg);  border-color:var(--lb-border);  } .lb  .card-name{color:var(--lb);}  .lb  .card-meta{color:#993556;}
-  .lb2 { background:var(--lb2-bg); border-color:var(--lb2-border); } .lb2 .card-name{color:#4b1528;} .lb2 .card-meta{color:#72243e;}
-  .lb3 { background:var(--lb3-bg); border-color:var(--lb3-border); } .lb3 .card-name{color:#3a0e1e;} .lb3 .card-meta{color:#72243e;}
-  .lb4 { background:var(--lb4-bg); border-color:var(--lb4-border); } .lb4 .card-name{color:#2a0818;} .lb4 .card-meta{color:#5a1535;}
-  .unk { background:#f0ece6; border-color:#d4c8b8; } .unk .card-name{color:#5a4e42;} .unk .card-meta{color:#8a7a6e;}
-  .you { background:var(--you-bg); border-color:var(--you-border); border-width:1.5px; } .you .card-name{color:#0c447c;font-weight:700;} .you .card-meta{color:#185fa5;}
-  .sp  { background:var(--sp-bg);  border-color:var(--sp-border);  border-width:1.5px; } .sp  .card-name{color:#27500a;font-weight:700;} .sp  .card-meta{color:#3b6d11;}
-  .ca  { background:var(--ca-bg);  border-color:var(--ca-border);  border-width:2px;   } .ca  .card-name{color:#173404;font-weight:700;} .ca  .card-meta{color:#3b6d11;}
+/* Color themes */
+.it  { background:var(–it-bg);  border-color:var(–it-border);  } .it  .card-name{color:var(–it);}  .it  .card-meta{color:#534ab7;}
+.es  { background:var(–es-bg);  border-color:var(–es-border);  } .es  .card-name{color:var(–es);}  .es  .card-meta{color:#993c1d;}
+.es2 { background:var(–es2-bg); border-color:var(–es2-border); } .es2 .card-name{color:#4a1b0c;} .es2 .card-meta{color:#712b13;}
+.fr  { background:var(–fr-bg);  border-color:var(–fr-border);  } .fr  .card-name{color:var(–fr);}  .fr  .card-meta{color:#0f6e56;}
+.oc  { background:var(–oc-bg);  border-color:var(–oc-border);  } .oc  .card-name{color:var(–oc);}  .oc  .card-meta{color:#854f0b;}
+.oc2 { background:var(–oc2-bg); border-color:var(–oc2-border); } .oc2 .card-name{color:#412200;} .oc2 .card-meta{color:#633806;}
+.oc3 { background:var(–oc3-bg); border-color:var(–oc3-border); } .oc3 .card-name{color:#2a1500;} .oc3 .card-meta{color:#412200;}
+.lb  { background:var(–lb-bg);  border-color:var(–lb-border);  } .lb  .card-name{color:var(–lb);}  .lb  .card-meta{color:#993556;}
+.lb2 { background:var(–lb2-bg); border-color:var(–lb2-border); } .lb2 .card-name{color:#4b1528;} .lb2 .card-meta{color:#72243e;}
+.lb3 { background:var(–lb3-bg); border-color:var(–lb3-border); } .lb3 .card-name{color:#3a0e1e;} .lb3 .card-meta{color:#72243e;}
+.lb4 { background:var(–lb4-bg); border-color:var(–lb4-border); } .lb4 .card-name{color:#2a0818;} .lb4 .card-meta{color:#5a1535;}
+.unk { background:#f0ece6; border-color:#d4c8b8; } .unk .card-name{color:#5a4e42;} .unk .card-meta{color:#8a7a6e;}
+.you { background:var(–you-bg); border-color:var(–you-border); border-width:1.5px; } .you .card-name{color:#0c447c;font-weight:700;} .you .card-meta{color:#185fa5;}
+.sp  { background:var(–sp-bg);  border-color:var(–sp-border);  border-width:1.5px; } .sp  .card-name{color:#27500a;font-weight:700;} .sp  .card-meta{color:#3b6d11;}
+.ca  { background:var(–ca-bg);  border-color:var(–ca-border);  border-width:2px;   } .ca  .card-name{color:#173404;font-weight:700;} .ca  .card-meta{color:#3b6d11;}
 
-  /* Info Panel */
-  #info-panel { position:fixed; top:0; right:0; width:320px; height:100vh; background:#faf6ef; border-left:1px solid var(--gold-pale); box-shadow:-4px 0 24px rgba(0,0,0,0.08); transform:translateX(100%); transition:transform 0.32s cubic-bezier(0.4,0,0.2,1); z-index:100; overflow-y:auto; display:flex; flex-direction:column; }
-  #info-panel.open { transform:translateX(0); }
-  #info-panel-header { padding:1.2rem 1.2rem 0.8rem; border-bottom:1px solid var(--gold-pale); flex-shrink:0; }
-  #info-panel-header h2 { font-family:'Cinzel',serif; font-size:1.05rem; font-weight:500; color:var(--ink); line-height:1.3; }
-  .panel-dates { font-family:'IM Fell English',serif; font-style:italic; font-size:0.82rem; color:var(--gold); margin-top:0.25rem; }
-  #info-panel-close { position:absolute; top:1rem; left:-2.4rem; width:2rem; height:2rem; background:#faf6ef; border:1px solid var(--gold-pale); border-right:none; border-radius:4px 0 0 4px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:0.9rem; color:var(--ink-faint); }
-  #info-panel-body { padding:1rem 1.2rem; flex:1; font-size:0.82rem; line-height:1.65; color:var(--ink-light); }
-  #info-panel-body h3 { font-family:'Cinzel',serif; font-size:0.68rem; font-weight:500; letter-spacing:0.1em; color:var(--gold); text-transform:uppercase; margin:1rem 0 0.35rem; }
-  #info-panel-body h3:first-child { margin-top:0; }
-  #info-panel-body p { margin-bottom:0.5rem; }
-  .tag { display:inline-block; background:var(--gold-pale); color:var(--gold); font-size:0.65rem; padding:1px 7px; border-radius:3px; font-family:'Cinzel',serif; letter-spacing:0.07em; margin-right:4px; margin-bottom:4px; }
+/* Info Panel */
+#info-panel { position:fixed; top:0; right:0; width:320px; height:100vh; background:#faf6ef; border-left:1px solid var(–gold-pale); box-shadow:-4px 0 24px rgba(0,0,0,0.08); transform:translateX(100%); transition:transform 0.32s cubic-bezier(0.4,0,0.2,1); z-index:100; overflow-y:auto; display:flex; flex-direction:column; }
+#info-panel.open { transform:translateX(0); }
+#info-panel-header { padding:1.2rem 1.2rem 0.8rem; border-bottom:1px solid var(–gold-pale); flex-shrink:0; }
+#info-panel-header h2 { font-family:‘Cinzel’,serif; font-size:1.05rem; font-weight:500; color:var(–ink); line-height:1.3; }
+.panel-dates { font-family:‘IM Fell English’,serif; font-style:italic; font-size:0.82rem; color:var(–gold); margin-top:0.25rem; }
+#info-panel-close { position:absolute; top:1rem; left:-2.4rem; width:2rem; height:2rem; background:#faf6ef; border:1px solid var(–gold-pale); border-right:none; border-radius:4px 0 0 4px; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:0.9rem; color:var(–ink-faint); }
+#info-panel-body { padding:1rem 1.2rem; flex:1; font-size:0.82rem; line-height:1.65; color:var(–ink-light); }
+#info-panel-body h3 { font-family:‘Cinzel’,serif; font-size:0.68rem; font-weight:500; letter-spacing:0.1em; color:var(–gold); text-transform:uppercase; margin:1rem 0 0.35rem; }
+#info-panel-body h3:first-child { margin-top:0; }
+#info-panel-body p { margin-bottom:0.5rem; }
+.tag { display:inline-block; background:var(–gold-pale); color:var(–gold); font-size:0.65rem; padding:1px 7px; border-radius:3px; font-family:‘Cinzel’,serif; letter-spacing:0.07em; margin-right:4px; margin-bottom:4px; }
 
-  /* Nayla Box */
-  .nayla-box { max-width:580px; margin:1rem auto 0; background:linear-gradient(135deg,#faf7f0,#f0f7e8); border:1px solid var(--gold-pale); border-radius:10px; padding:1rem 1.25rem; text-align:center; }
-  .nayla-flags { font-size:1.4rem; letter-spacing:0.3em; margin-bottom:0.4rem; }
-  .nayla-title { font-family:'Cinzel',serif; font-size:0.8rem; font-weight:500; color:var(--ink); }
-  .nayla-sub { font-family:'IM Fell English',serif; font-style:italic; font-size:0.78rem; color:var(--ink-faint); margin-top:0.25rem; line-height:1.6; }
+/* Nayla Box */
+.nayla-box { max-width:580px; margin:1rem auto 0; background:linear-gradient(135deg,#faf7f0,#f0f7e8); border:1px solid var(–gold-pale); border-radius:10px; padding:1rem 1.25rem; text-align:center; }
+.nayla-flags { font-size:1.4rem; letter-spacing:0.3em; margin-bottom:0.4rem; }
+.nayla-title { font-family:‘Cinzel’,serif; font-size:0.8rem; font-weight:500; color:var(–ink); }
+.nayla-sub { font-family:‘IM Fell English’,serif; font-style:italic; font-size:0.78rem; color:var(–ink-faint); margin-top:0.25rem; line-height:1.6; }
 
-  /* Legend */
-  .legend-wrap { max-width:680px; margin:1.5rem auto 0; padding:0 0.75rem; }
-  .legend { display:flex; flex-wrap:wrap; gap:8px 14px; justify-content:center; }
-  .leg { display:flex; align-items:center; gap:5px; font-size:0.68rem; color:var(--ink-faint); }
-  .ld { width:10px; height:10px; border-radius:2px; flex-shrink:0; border:0.5px solid transparent; }
+/* Legend */
+.legend-wrap { max-width:680px; margin:1.5rem auto 0; padding:0 0.75rem; }
+.legend { display:flex; flex-wrap:wrap; gap:8px 14px; justify-content:center; }
+.leg { display:flex; align-items:center; gap:5px; font-size:0.68rem; color:var(–ink-faint); }
+.ld { width:10px; height:10px; border-radius:2px; flex-shrink:0; border:0.5px solid transparent; }
 
-  /* Overlay */
-  #overlay { position:fixed; inset:0; background:rgba(26,20,16,0.25); opacity:0; pointer-events:none; transition:opacity 0.32s; z-index:99; }
-  #overlay.show { opacity:1; pointer-events:all; }
+/* Overlay */
+#overlay { position:fixed; inset:0; background:rgba(26,20,16,0.25); opacity:0; pointer-events:none; transition:opacity 0.32s; z-index:99; }
+#overlay.show { opacity:1; pointer-events:all; }
 
-  @media (max-width:600px) { #info-panel{width:100vw;} .card-name{font-size:0.68rem;} .card-meta{font-size:0.58rem;} }
+@media (max-width:600px) { #info-panel{width:100vw;} .card-name{font-size:0.68rem;} .card-meta{font-size:0.58rem;} }
 </style>
+
 </head>
 <body>
 
@@ -137,6 +139,7 @@
 <div class="tree-container">
 
 <!-- ITALIAN LINE -->
+
 <div class="section-div"><div class="section-line"></div><div class="section-label" id="lbl-italian-line">Ghisi / Marconi — Veneto, Italy · paternal line</div><div class="section-line"></div></div>
 
 <div class="gen-label" id="gen-it-6">Gen 6 — to research · Padova / Verona, ~1820s</div>
@@ -188,6 +191,7 @@
 <div class="vl"><div></div></div>
 
 <!-- SPANISH LINE -->
+
 <div class="section-div"><div class="section-line"></div><div class="section-label" id="lbl-spanish-line">Caballero / Dominguez — Zalamea la Real, Andalusia</div><div class="section-line"></div></div>
 
 <div class="gen-label" id="gen-es-5">Gen 5 — Zalamea la Real, Huelva</div>
@@ -237,6 +241,7 @@
 <div class="vl"><div></div></div>
 
 <!-- OCCITAN LINE -->
+
 <div class="section-div"><div class="section-line"></div><div class="section-label" id="lbl-occitan-line">Lafourcade / Massip / Bordes / Respaud — Thil · Maurens · Ariège · Toulouse</div><div class="section-line"></div></div>
 
 <div class="gen-label" id="gen-oc-7">Gen 7 — Thil, Haute-Garonne</div>
@@ -280,6 +285,7 @@
 <div class="vl"><div></div></div>
 
 <!-- GEN 3 PARENTS -->
+
 <div class="gen-label" id="gen-3">Gen 3 — parents of Christophe</div>
 <div class="row">
   <div class="couple">
@@ -291,6 +297,7 @@
 <div class="vl"><div></div></div>
 
 <!-- GEN 0 -->
+
 <div class="gen-label" id="gen-0">Gen 0 — Christophe &amp; Sahar</div>
 <div class="row">
   <div class="couple" style="align-items:center">
@@ -302,6 +309,7 @@
 <div class="vl"><div></div></div>
 
 <!-- NEXT GEN -->
+
 <div class="gen-label" id="gen-next">Next generation 🌱</div>
 <div class="row">
   <div class="card ca" onclick="openPanel('nayla')"><div class="card-name">Nayla Ghisi</div><div class="card-meta">b. 15 Jan 2022 · Toronto, Canada</div></div>
@@ -314,6 +322,7 @@
 </div>
 
 <!-- LEBANESE LINE — ELIAS -->
+
 <div class="section-div" style="margin-top:1.8rem"><div class="section-line"></div><div class="section-label" id="lbl-elias-line">Elias — Sahar's paternal line · Mayfouk, Jbeil</div><div class="section-line"></div></div>
 
 <div class="gen-label" id="gen-lb-4a">Gen 4 — Sahar's paternal grandparents · Mayfouk</div>
@@ -332,6 +341,7 @@
 </div>
 
 <!-- LEBANESE LINE — ROUHANA -->
+
 <div class="section-div" style="margin-top:1.2rem"><div class="section-line"></div><div class="section-label" id="lbl-rouhana-line">Rouhana / Tanous / Mouzaya — Sahar's maternal line · Batroun</div><div class="section-line"></div></div>
 
 <div class="gen-label" id="gen-lb-6">Gen 6 — Sahar's great-great-grandparents · Batroun</div>
@@ -366,6 +376,7 @@
 </div>
 
 <!-- Legend -->
+
 <div class="legend-wrap">
   <div class="legend">
     <div class="leg"><div class="ld" style="background:#eeedfe;border-color:#afa9ec"></div><span id="leg-it">Italian Veneto</span></div>
@@ -501,5 +512,6 @@ function closePanel() {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
 </script>
+
 </body>
 </html>
